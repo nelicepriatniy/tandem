@@ -1,47 +1,47 @@
-
 if (window.innerWidth > 1024) {
   const section = document.querySelector('.h-scroll');
   const content = document.querySelector('.h-scroll__content');
 
-  if (section) {
+  if (section && content) {
     let currentX = 0;
     let targetX = 0;
-    let isActive = false;
 
     function lerp(start, end, ease) {
       return start + (end - start) * ease;
     }
 
     function animate() {
-      if (isActive) {
-        currentX = lerp(currentX, targetX, 0.08); // 0.08 = сила инерции (меньше = более "тяжелая")
+      // всегда анимируем, если есть разница
+      if (Math.abs(currentX - targetX) > 0.1) {
+        currentX = lerp(currentX, targetX, 0.08);
+        content.style.transform = `translateX(${-currentX}px)`;
+      } else {
+        currentX = targetX;
         content.style.transform = `translateX(${-currentX}px)`;
       }
 
       requestAnimationFrame(animate);
-
     }
+
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const start = section.offsetTop;
       const end = start + section.offsetHeight - window.innerHeight;
 
-      if (scrollTop >= start && scrollTop <= end) {
-        isActive = true;
+      const maxScroll = content.scrollWidth - window.innerWidth;
 
-        const progress = (scrollTop - start) / (end - start);
-        const maxScroll = content.scrollWidth - window.innerWidth;
-
-        targetX = progress * maxScroll;
+      if (scrollTop < start) {
+        targetX = 0;
+      } else if (scrollTop > end) {
+        targetX = maxScroll; // гарантированно докручиваем до конца
       } else {
-        isActive = false;
+        const progress = (scrollTop - start) / (end - start);
+        targetX = progress * maxScroll;
       }
     });
 
     animate();
   }
-
-
 }
 
 
