@@ -226,6 +226,10 @@
   z-index: 2;
 }
 
+.img-section img {
+  max-width: 100%;
+}
+
 footer {
   background: #131313;
   padding-top: 40px;
