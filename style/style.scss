@@ -61,6 +61,14 @@ $bg-black: #292929;
 
 //site styles
 
+.desk {
+  display: block;
+}
+
+.mob {
+  display: none;
+}
+
 .container {
   width: 100%;
   max-width: 1800px;
@@ -298,7 +306,6 @@ $bg-black: #292929;
 }
 
 footer {
-  margin-top: 86px;
   background: #131313;
   padding-top: 40px;
 
@@ -357,13 +364,6 @@ footer {
 
 }
 
-.desk {
-  display: block;
-}
-
-.mob {
-  display: none;
-}
 
 header {
   padding: 20px 0;
